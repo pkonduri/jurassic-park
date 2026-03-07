@@ -1,0 +1,97 @@
+@import "tailwindcss";
+
+@theme {
+  --color-abyss: #050508;
+  --color-deep: #0a0a10;
+  --color-elevated: #0f0f18;
+  --color-card: #12121d;
+
+  --color-amber: #d4943c;
+  --color-amber-light: #e8b164;
+  --color-amber-bright: #f4c97a;
+
+  --color-green-life: #34d399;
+  --color-purple-soft: #a855f7;
+  --color-blue-science: #60a5fa;
+
+  --color-text-primary: #ede8df;
+  --color-text-secondary: #8a8699;
+  --color-text-muted: #4e4b5e;
+
+  --color-glass-border: rgba(255, 255, 255, 0.06);
+  --color-glass-border-hover: rgba(255, 255, 255, 0.1);
+  --color-amber-border: rgba(212, 148, 60, 0.2);
+
+  --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  margin: 0;
+}
+
+::selection {
+  background: rgba(212, 148, 60, 0.35);
+  color: #fff;
+}
+
+.glass {
+  background: rgba(15, 15, 24, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--color-glass-border);
+}
+
+.glass-heavy {
+  background: rgba(15, 15, 24, 0.6);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border: 1px solid var(--color-glass-border);
+}
+
+.text-gradient-amber {
+  background: linear-gradient(135deg, var(--color-amber), var(--color-amber-bright));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.shimmer {
+  background: linear-gradient(135deg, var(--color-amber) 0%, var(--color-amber-bright) 50%, var(--color-amber) 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 4s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes livePulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 8px var(--color-amber); }
+  50% { opacity: 0.4; box-shadow: 0 0 16px var(--color-amber); }
+}
+
+@keyframes scrollDown {
+  0% { top: -50%; }
+  100% { top: 150%; }
+}
+
+@keyframes heroGlow {
+  0%, 100% { opacity: 0.6; transform: translateX(-50%) scale(1); }
+  50% { opacity: 1; transform: translateX(-50%) scale(1.1); }
+}
+
+@keyframes nodeRing {
+  0%, 100% { transform: scale(1); opacity: 0.3; }
+  50% { transform: scale(1.2); opacity: 0; }
+}
