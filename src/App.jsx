@@ -1,3 +1,4 @@
+import { ThemeProvider, useTheme } from './ThemeContext';
 import ParticleCanvas from './components/ParticleCanvas';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -15,13 +16,33 @@ import Moat from './components/Moat';
 import Closing from './components/Closing';
 import Footer from './components/Footer';
 
-function App() {
+function AppInner() {
+  const { theme } = useTheme();
+  const isLight = theme === 'light';
+
   return (
     <>
       {/* Fixed background layers */}
-      <ParticleCanvas />
-      <div className="fixed top-[-30%] left-1/2 -translate-x-1/2 w-[200%] h-[70%] bg-[radial-gradient(ellipse_at_center,rgba(212,148,60,0.04)_0%,transparent_60%)] pointer-events-none z-0" />
-      <div className="fixed top-[30%] right-[-20%] w-[60%] h-[60%] bg-[radial-gradient(ellipse_at_center,rgba(122,0,223,0.03)_0%,transparent_60%)] pointer-events-none z-0" />
+      <ParticleCanvas theme={theme} />
+
+      {/* Ambient top glow */}
+      <div
+        className="fixed top-[-30%] left-1/2 -translate-x-1/2 w-[200%] h-[70%] pointer-events-none z-0 transition-opacity duration-500"
+        style={{
+          background: isLight
+            ? 'radial-gradient(ellipse at center, rgba(168,85,247,0.06) 0%, transparent 60%)'
+            : 'radial-gradient(ellipse at center, rgba(212,148,60,0.04) 0%, transparent 60%)',
+        }}
+      />
+      {/* Side glow */}
+      <div
+        className="fixed top-[30%] right-[-20%] w-[60%] h-[60%] pointer-events-none z-0 transition-opacity duration-500"
+        style={{
+          background: isLight
+            ? 'radial-gradient(ellipse at center, rgba(96,165,250,0.05) 0%, transparent 60%)'
+            : 'radial-gradient(ellipse at center, rgba(122,0,223,0.03) 0%, transparent 60%)',
+        }}
+      />
 
       {/* Navigation */}
       <Navbar />
@@ -52,6 +73,14 @@ function App() {
 
       <Footer />
     </>
+  );
+}
+
+function App() {
+  return (
+    <ThemeProvider>
+      <AppInner />
+    </ThemeProvider>
   );
 }
 

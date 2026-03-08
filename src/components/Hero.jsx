@@ -28,6 +28,22 @@ export default function Hero() {
         }}
       />
 
+      {/* HUD corner decorations */}
+      <div className="absolute top-24 left-6 md:left-12 flex flex-col gap-1 opacity-30 pointer-events-none select-none">
+        <div className="w-6 h-6 border-t-2 border-l-2 border-amber" />
+        <div className="font-mono text-[0.55rem] tracking-widest text-amber mt-1">GNS//HQ</div>
+      </div>
+      <div className="absolute top-24 right-6 md:right-12 flex flex-col items-end gap-1 opacity-30 pointer-events-none select-none">
+        <div className="w-6 h-6 border-t-2 border-r-2 border-amber" />
+        <div className="font-mono text-[0.55rem] tracking-widest text-amber mt-1">v2.0.26</div>
+      </div>
+      <div className="absolute bottom-20 left-6 md:left-12 opacity-25 pointer-events-none select-none">
+        <div className="w-6 h-6 border-b-2 border-l-2 border-amber" />
+      </div>
+      <div className="absolute bottom-20 right-6 md:right-12 opacity-25 pointer-events-none select-none">
+        <div className="w-6 h-6 border-b-2 border-r-2 border-amber" />
+      </div>
+
       <div className="relative z-[2] max-w-[900px]">
         {/* Eyebrow badge */}
         <motion.div
@@ -74,10 +90,22 @@ export default function Hero() {
           <a
             href="#vision"
             onClick={(e) => scrollTo(e, '#vision')}
-            className="inline-flex items-center gap-2.5 px-8 py-4 text-[0.88rem] font-medium tracking-wide text-text-primary glass rounded-full no-underline border border-glass-border-hover hover:bg-[rgba(20,20,32,0.7)] hover:-translate-y-0.5 transition-all duration-300"
+            className="inline-flex items-center gap-2.5 px-8 py-4 text-[0.88rem] font-medium tracking-wide text-text-primary glass rounded-full no-underline border border-glass-border-hover hover:-translate-y-0.5 transition-all duration-300"
           >
             Explore the Vision
           </a>
+        </motion.div>
+
+        {/* HUD data strip */}
+        <motion.div
+          {...fadeUp(1.1)}
+          className="mt-14 inline-flex items-center gap-6 font-mono text-[0.6rem] tracking-[0.15em] text-text-muted opacity-60"
+        >
+          <span>LAT 37.7749° N</span>
+          <span className="w-px h-3 bg-current opacity-30" />
+          <span>LON 122.4194° W</span>
+          <span className="w-px h-3 bg-current opacity-30" />
+          <span style={{ animation: 'dataFlicker 6s ease-in-out infinite' }}>SYS ONLINE</span>
         </motion.div>
       </div>
 

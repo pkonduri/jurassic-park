@@ -26,6 +26,23 @@
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
+/* ─── Light (Day) Mode Overrides ──────────────────────────────── */
+[data-theme="light"] {
+  --color-abyss: #f0eef8;
+  --color-deep: #e5e3f5;
+  --color-elevated: #f8f7ff;
+  --color-card: #ffffff;
+
+  --color-text-primary: #0c0a1f;
+  --color-text-secondary: #524f6a;
+  --color-text-muted: #9896b2;
+
+  --color-glass-border: rgba(90, 80, 140, 0.12);
+  --color-glass-border-hover: rgba(90, 80, 140, 0.22);
+  --color-amber-border: rgba(212, 148, 60, 0.3);
+}
+
+/* ─── Base ────────────────────────────────────────────────────── */
 html {
   scroll-behavior: smooth;
 }
@@ -34,6 +51,9 @@ body {
   font-family: var(--font-body);
   overflow-x: hidden;
   margin: 0;
+  background-color: var(--color-abyss);
+  color: var(--color-text-primary);
+  transition: background-color 0.5s ease, color 0.5s ease;
 }
 
 ::selection {
@@ -41,20 +61,52 @@ body {
   color: #fff;
 }
 
+/* ─── Futuristic Grid Overlay ─────────────────────────────────── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(212, 148, 60, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(212, 148, 60, 0.025) 1px, transparent 1px);
+  background-size: 72px 72px;
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 0.5s ease;
+}
+
+[data-theme="light"] body::before {
+  background-image:
+    linear-gradient(rgba(90, 80, 180, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(90, 80, 180, 0.045) 1px, transparent 1px);
+}
+
+/* ─── Glass surfaces ──────────────────────────────────────────── */
 .glass {
-  background: rgba(15, 15, 24, 0.6);
+  background: rgba(15, 15, 24, 0.55);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--color-glass-border);
+  transition: background 0.4s ease, border-color 0.4s ease;
+}
+
+[data-theme="light"] .glass {
+  background: rgba(255, 255, 255, 0.6);
 }
 
 .glass-heavy {
-  background: rgba(15, 15, 24, 0.6);
+  background: rgba(15, 15, 24, 0.75);
   backdrop-filter: blur(40px);
   -webkit-backdrop-filter: blur(40px);
   border: 1px solid var(--color-glass-border);
+  transition: background 0.4s ease, border-color 0.4s ease;
 }
 
+[data-theme="light"] .glass-heavy {
+  background: rgba(255, 255, 255, 0.82);
+}
+
+/* ─── Typography helpers ──────────────────────────────────────── */
 .text-gradient-amber {
   background: linear-gradient(135deg, var(--color-amber), var(--color-amber-bright));
   -webkit-background-clip: text;
@@ -71,6 +123,108 @@ body {
   animation: shimmer 4s ease-in-out infinite;
 }
 
+/* ─── Futuristic cyber-card corners ──────────────────────────── */
+.cyber-corners {
+  position: relative;
+}
+
+.cyber-corners::before,
+.cyber-corners::after {
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: rgba(212, 148, 60, 0.4);
+  border-style: solid;
+  transition: border-color 0.3s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.cyber-corners::before {
+  top: -1px;
+  left: -1px;
+  border-width: 2px 0 0 2px;
+  border-radius: 2px 0 0 0;
+}
+
+.cyber-corners::after {
+  bottom: -1px;
+  right: -1px;
+  border-width: 0 2px 2px 0;
+  border-radius: 0 0 2px 0;
+}
+
+.cyber-corners:hover::before,
+.cyber-corners:hover::after {
+  border-color: rgba(212, 148, 60, 0.9);
+}
+
+/* ─── Neon glow utilities ─────────────────────────────────────── */
+.glow-amber {
+  box-shadow: 0 0 20px rgba(212, 148, 60, 0.25), 0 0 40px rgba(212, 148, 60, 0.1);
+}
+
+.glow-amber-text {
+  text-shadow: 0 0 20px rgba(212, 148, 60, 0.5), 0 0 40px rgba(212, 148, 60, 0.2);
+}
+
+.glow-green {
+  box-shadow: 0 0 20px rgba(52, 211, 153, 0.2), 0 0 40px rgba(52, 211, 153, 0.08);
+}
+
+/* ─── HUD scanline overlay ────────────────────────────────────── */
+.hud-scan::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(255, 255, 255, 0.012) 3px,
+    rgba(255, 255, 255, 0.012) 4px
+  );
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+/* ─── Holographic border animation ───────────────────────────── */
+@property --holo-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.holo-border {
+  position: relative;
+  --holo-angle: 0deg;
+  animation: holoSpin 4s linear infinite;
+}
+
+.holo-border::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--holo-angle),
+    rgba(212, 148, 60, 0.6),
+    rgba(168, 85, 247, 0.4),
+    rgba(96, 165, 250, 0.4),
+    rgba(52, 211, 153, 0.4),
+    rgba(212, 148, 60, 0.6)
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 1px;
+  pointer-events: none;
+}
+
+/* ─── Keyframes ───────────────────────────────────────────────── */
 @keyframes shimmer {
   0%, 100% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
@@ -94,4 +248,24 @@ body {
 @keyframes nodeRing {
   0%, 100% { transform: scale(1); opacity: 0.3; }
   50% { transform: scale(1.2); opacity: 0; }
+}
+
+@keyframes holoSpin {
+  to { --holo-angle: 360deg; }
+}
+
+@keyframes pulseRing {
+  0% { transform: scale(0.95); opacity: 0.8; }
+  50% { transform: scale(1.08); opacity: 0.3; }
+  100% { transform: scale(0.95); opacity: 0.8; }
+}
+
+@keyframes dataFlicker {
+  0%, 97%, 100% { opacity: 1; }
+  98% { opacity: 0.4; }
+}
+
+@keyframes gridShift {
+  0% { background-position: 0 0, 0 0; }
+  100% { background-position: 72px 72px, 72px 72px; }
 }

@@ -56,8 +56,11 @@ export default function Problem() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-16">
           {cards.map((card, i) => (
             <RevealSection key={i} delay={i * 0.1}>
-              <div className="glass rounded-2xl p-8 h-full hover:bg-[rgba(20,20,32,0.7)] hover:border-glass-border-hover hover:-translate-y-1.5 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group relative overflow-hidden">
-                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[rgba(255,255,255,0.08)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="cyber-corners glass rounded-2xl p-8 h-full hover:border-glass-border-hover hover:-translate-y-1.5 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group relative overflow-hidden"
+                style={{ '--tw-shadow': 'none' }}
+                onMouseEnter={e => e.currentTarget.style.boxShadow = '0 0 30px rgba(212,148,60,0.08), 0 20px 40px rgba(0,0,0,0.3)'}
+                onMouseLeave={e => e.currentTarget.style.boxShadow = ''}>
+                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[rgba(212,148,60,0.2)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <div className="w-[52px] h-[52px] rounded-[14px] bg-[rgba(212,148,60,0.12)] border border-[rgba(212,148,60,0.12)] flex items-center justify-center mb-6">
                   {card.icon}
                 </div>

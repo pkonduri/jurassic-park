@@ -1,7 +1,12 @@
 import { useEffect, useRef } from 'react';
 
-export default function ParticleCanvas() {
+export default function ParticleCanvas({ theme }) {
   const canvasRef = useRef(null);
+  const themeRef = useRef(theme);
+
+  useEffect(() => {
+    themeRef.current = theme;
+  }, [theme]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -54,9 +59,13 @@ export default function ParticleCanvas() {
       }
 
       draw(ctx) {
+        const isLight = themeRef.current === 'light';
+        // In light mode: deeper saturation, slightly lower lightness so particles show on bright bg
+        const l = isLight ? Math.max(this.l - 20, 30) : this.l;
+        const opacity = isLight ? this.opacity * 0.55 : this.opacity;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = `hsla(${this.h}, ${this.s}%, ${this.l}%, ${this.opacity})`;
+        ctx.fillStyle = `hsla(${this.h}, ${this.s}%, ${l}%, ${opacity})`;
         ctx.fill();
       }
     }
@@ -68,15 +77,17 @@ export default function ParticleCanvas() {
     }
 
     function drawConnections() {
+      const isLight = themeRef.current === 'light';
+      const lineColor = isLight ? '90, 80, 180' : '212, 148, 60';
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[i].x - particles[j].x;
           const dy = particles[i].y - particles[j].y;
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < 110) {
-            const alpha = (1 - dist / 110) * 0.12;
+            const alpha = (1 - dist / 110) * (isLight ? 0.08 : 0.12);
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(212, 148, 60, ${alpha})`;
+            ctx.strokeStyle = `rgba(${lineColor}, ${alpha})`;
             ctx.lineWidth = 0.5;
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
@@ -119,7 +130,7 @@ export default function ParticleCanvas() {
     <canvas
       ref={canvasRef}
       className="fixed inset-0 z-0 pointer-events-none"
-      style={{ opacity: 0.5 }}
+      style={{ opacity: 0.6 }}
     />
   );
 }
